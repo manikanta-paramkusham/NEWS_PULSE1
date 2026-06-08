@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NewsPulse — Admin Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            rgba(8,12,16,0.78),
+            rgba(8,12,16,0.78)
+        ),
+        url('/static/images/IMAGE_3.jpg');
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+    font-family:'Poppins',sans-serif;
+    color:#e8edf3;
+}
+
+.card{
+    width:100%;
+    max-width:420px;
+
+    background:rgba(13,17,23,0.85);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+
+    border:1px solid rgba(236,72,153,0.25);
+    border-radius:18px;
+
+    padding:40px 36px;
+
+    box-shadow:0 24px 60px rgba(0,0,0,0.5);
+}
+
+.logo{
+    font-family:'Orbitron',sans-serif;
+    font-size:28px;
+    font-weight:800;
+    text-align:center;
+    margin-bottom:8px;
+}
+
+.logo span{
+    color:#ec4899;
+}
+
+.badge{
+    display:block;
+    width:fit-content;
+    margin:0 auto 28px;
+
+    padding:6px 14px;
+
+    border-radius:20px;
+
+    background:rgba(236,72,153,0.12);
+    border:1px solid rgba(236,72,153,0.35);
+
+    color:#ec4899;
+
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.field{
+    margin-bottom:18px;
+}
+
+label{
+    display:block;
+    font-size:12px;
+    color:#cbd5e1;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    margin-bottom:7px;
+}
+
+input{
+    width:100%;
+    background:#141b24;
+    border:1px solid #334155;
+    color:#e8edf3;
+
+    padding:12px 14px;
+    border-radius:10px;
+
+    font-size:14px;
+    outline:none;
+
+    transition:.2s;
+}
+
+input:focus{
+    border-color:#ec4899;
+    box-shadow:0 0 12px rgba(236,72,153,.25);
+}
+
+.btn{
+    width:100%;
+    padding:12px;
+
+    background:#ec4899;
+    color:#fff;
+
+    border:none;
+    border-radius:10px;
+
+    font-size:14px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.2s;
+    margin-top:6px;
+}
+
+.btn:hover{
+    background:#db2777;
+}
+
+.btn:disabled{
+    opacity:.5;
+    cursor:default;
+}
+
+.error{
+    background:rgba(255,71,87,.1);
+    border:1px solid rgba(255,71,87,.3);
+    color:#ff4757;
+
+    padding:10px 14px;
+    border-radius:8px;
+
+    font-size:13px;
+    margin-bottom:16px;
+
+    display:none;
+}
+
+.footer-link{
+    text-align:center;
+    margin-top:22px;
+    font-size:13px;
+    color:#cbd5e1;
+}
+
+.footer-link a{
+    color:#ec4899;
+    text-decoration:none;
+}
+
+.footer-link a:hover{
+    text-decoration:underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="logo">
+        News<span>Pulse</span>
+    </div>
+
+    <span class="badge">
+        Admin Portal
+    </span>
+
+    <div class="error" id="errMsg"></div>
+
+    <div class="field">
+        <label>Admin Username</label>
+        <input type="text" id="username" placeholder="admin" autocomplete="username"/>
+    </div>
+
+    <div class="field">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Admin password" autocomplete="current-password"/>
+    </div>
+
+    <button class="btn" id="loginBtn" onclick="doLogin()">
+        Admin Sign In
+    </button>
+
+    <div class="footer-link" style="margin-top:22px">
+        <a href="/">← Back to home</a>
+    </div>
+
+</div>
+
+<script>
+async function doLogin() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  const btn = document.getElementById('loginBtn');
+  const err = document.getElementById('errMsg');
+
+  err.style.display = 'none';
+
+  if (!username || !password) {
+    err.textContent = 'Please enter username and password.';
+    err.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Signing in...';
+
+  const res = await fetch('/api/admin/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
+  });
+
+  const data = await res.json();
+
+  btn.disabled = false;
+  btn.textContent = 'Admin Sign In';
+
+  if (data.success) {
+    window.location.href = data.redirect;
+  } else {
+    err.textContent = data.error;
+    err.style.display = 'block';
+  }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+</script>
+
+</body>
+</html>
+

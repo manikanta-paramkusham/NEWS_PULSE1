@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEWS PULSE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:24px;
+
+    background:
+        linear-gradient(
+            rgba(5,10,20,0.82),
+            rgba(5,10,20,0.82)
+        ),
+        url('/static/images/IMAGE_2.jpg');
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+    font-family:'Poppins',sans-serif;
+    color:#ffffff;
+}
+
+.hero{
+    text-align:center;
+    max-width:700px;
+    width:100%;
+}
+
+.logo{
+    font-family:'Orbitron',sans-serif;
+    font-size:72px;
+    font-weight:900;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin-bottom:18px;
+
+    color:#ffffff;
+    text-shadow:none;
+}
+
+.logo span{
+    color:#9f67ff;
+}
+
+.tagline{
+    color:#ffffff;
+    font-size:16px;
+    line-height:1.7;
+    margin-bottom:45px;
+}
+
+.dot{
+    width:7px;
+    height:7px;
+    display:inline-block;
+    background:#9f67ff;
+    border-radius:50%;
+    margin-right:10px;
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    0%,100%{opacity:1;}
+    50%{opacity:.35;}
+}
+
+.cards{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:24px;
+    flex-wrap:wrap;
+}
+
+.card{
+    width:220px;
+    min-height:190px;
+
+    background:rgba(10,15,25,.88);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:18px;
+    padding:30px 22px;
+
+    text-decoration:none;
+    color:inherit;
+
+    transition:.3s ease;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card:hover .card-icon{
+    transform:scale(1.15);
+}
+
+.card.user:hover{
+    border-color:#9f67ff;
+    box-shadow:0 0 30px rgba(159,103,255,.35);
+}
+
+.card.admin:hover{
+    border-color:#ec4899;
+    box-shadow:0 0 30px rgba(236,72,153,.35);
+}
+
+.card-icon{
+    font-size:42px;
+    margin-bottom:18px;
+    transition:all .3s ease;
+}
+
+.card-title{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:12px;
+}
+
+.card.user .card-title{
+    color:#9f67ff;
+}
+
+.card.admin .card-title{
+    color:#ec4899;
+}
+
+.card-desc{
+    font-size:13px;
+    line-height:1.6;
+    color:#f3f4f6;
+}
+
+.register-link{
+    margin-top:32px;
+    color:#ffffff;
+    font-size:14px;
+}
+
+.register-link a{
+    color:#9f67ff;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.register-link a:hover{
+    text-decoration:underline;
+}
+
+@media(max-width:768px){
+
+    .logo{
+        font-size:52px;
+    }
+
+    .cards{
+        flex-direction:column;
+    }
+
+    .card{
+        width:100%;
+        max-width:320px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+
+    <div class="logo">
+        NEWS<span>PULSE</span>
+    </div>
+
+    <p class="tagline">
+        <span class="dot"></span>
+        AI-powered news intelligence platform for sentiment and trend analysis
+    </p>
+
+    <div class="cards">
+
+        <a class="card user" href="/user/login">
+            <div class="card-icon">📊</div>
+            <div class="card-title">User Portal</div>
+            <div class="card-desc">
+                Browse articles, explore sentiment trends and keyword analytics
+            </div>
+        </a>
+
+        <a class="card admin" href="/admin/login">
+            <div class="card-icon">🧠</div>
+            <div class="card-title">Admin Portal</div>
+            <div class="card-desc">
+                Train models, run predictions and access advanced analytics
+            </div>
+        </a>
+
+    </div>
+
+    <div class="register-link">
+        New here?
+        <a href="/register">Create a user account</a>
+    </div>
+
+</div>
+
+</body>
+</html>
+
