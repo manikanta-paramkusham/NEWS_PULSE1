@@ -1534,6 +1534,42 @@ def dataset_preview():
 
     return jsonify(rows)
 
+@app.route("/api/user/export")
+@login_required
+def export_csv():
+
+    sentiment = request.args.get("sentiment", "All")
+    source = request.args.get("source", "All")
+    search = request.args.get("search", "")
+
+    df = DF.copy()
+
+    if sentiment != "All":
+        df = df[df["sentiment_label"] == sentiment]
+
+    if source != "All" and "Source" in df.columns:
+        df = df[df["Source"] == source]
+
+    if search:
+        df = df[
+            df["Title"].str.contains(search, case=False, na=False)
+            |
+            df["Description"].str.contains(search, case=False, na=False)
+        ]
+
+    output = io.BytesIO()
+
+    df.to_csv(output, index=False)
+
+    output.seek(0)
+
+    return send_file(
+        output,
+        mimetype="text/csv",
+        as_attachment=True,
+        download_name="news_export.csv"
+    )
+
 
 if __name__ == "__main__":
 
