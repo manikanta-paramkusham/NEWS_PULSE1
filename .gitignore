@@ -20,7 +20,7 @@ env/
 *.env
 
 # Data files (large — add to Git LFS or keep local)
-gnews_data_cleaned.csv
+
 
 # IDE
 .vscode/
