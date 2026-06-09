@@ -82,6 +82,11 @@ if not os.path.exists(UPLOAD_FOLDER):
 # ==========================================================
 # MYSQL CONFIG
 # ==========================================================
+print("DB_HOST =", os.environ.get("DB_HOST"))
+print("DB_PORT =", os.environ.get("DB_PORT"))
+print("DB_USER =", os.environ.get("DB_USER"))
+print("DB_NAME =", os.environ.get("DB_NAME"))
+
 
 DB_CONFIG = {
     "host": os.environ.get("DB_HOST"),
